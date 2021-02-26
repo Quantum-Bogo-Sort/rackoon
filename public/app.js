@@ -20,6 +20,7 @@ function getFoods()
 {
     const db = firebase.firestore();
     db.collection("foods").get().then((querySnapshot) => {
+        //Maybe returb quertSnapshot
         querySnapshot.forEach((doc) => {
             //Print everything from database by name
             console.log(`${doc.id} => ${doc.data().name}`);
@@ -42,5 +43,14 @@ function addFood(category, expiration, name, price, weight)
     })
     .catch((error) => {
         console.error("Error adding document: ", error);
+    });
+}
+
+function removeFoodByDocID(id)
+{
+    db.collection("foods").doc(id).delete().then(() => {
+        console.log("Document successfully deleted!");
+    }).catch((error) => {
+        console.error("Error removing document: ", error);
     });
 }
