@@ -16,16 +16,11 @@ function googleLogin()
     })
 }
 
-function getFoods()
+async function getFoods()
 {
     const db = firebase.firestore();
-    db.collection("foods").get().then((querySnapshot) => {
-        //Maybe returb quertSnapshot
-        querySnapshot.forEach((doc) => {
-            //Print everything from database by name
-            console.log(`${doc.id} => ${doc.data().name}`);
-        });
-    });
+    let foods = await db.collection("foods").get();
+    return foods;
 }
 
 function addFood(category, expiration, name, price, weight)
