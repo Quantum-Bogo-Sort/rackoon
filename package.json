@@ -1,0 +1,22 @@
+{
+  "name": "rackoon",
+  "version": "1.0.0",
+  "description": "TODO",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Quantum-Bogo-Sort/rackoon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Quantum-Bogo-Sort/rackoon/issues"
+  },
+  "homepage": "https://github.com/Quantum-Bogo-Sort/rackoon#readme",
+  "dependencies": {
+    "firebase": "^8.2.9"
+  }
+}
