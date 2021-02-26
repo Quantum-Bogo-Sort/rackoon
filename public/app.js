@@ -48,6 +48,7 @@ function addFood(category, expiration, name, price, weight)
 
 function removeFoodByDocID(id)
 {
+    const db = firebase.firestore();
     db.collection("foods").doc(id).delete().then(() => {
         console.log("Document successfully deleted!");
     }).catch((error) => {
