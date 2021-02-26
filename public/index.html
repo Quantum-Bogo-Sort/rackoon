@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+    <title>Rackoon</title>
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/8.2.9/firebase-app.js"></script>
@@ -23,25 +23,55 @@
     -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
   </head>
   <body>
-    <script src="app.js"></script>
-    <button onclick="googleLogin()">
-      Login with google
-    </button>
+    <div class="login-page">
+      <header>
+        <div class="topbar">
+          <div class="small-logo">
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve">
+              <g>
+                <path style="fill:#8C7873;" d="M16.516,62.256c0,0-8.258,90.839,33.032,140.387l107.355-74.323
+                C156.904,128.321,107.355,53.998,16.516,62.256z" />
+                <path style="fill:#8C7873;" d="M494.81,62.897c0,0,8.258,90.839-33.032,140.387l-107.355-74.323
+                C354.423,128.962,403.972,54.639,494.81,62.897z" />
+              </g>
+              <path style="fill:#AA968C;" d="M256.001,87.03C154.895,87.03,24.206,165.052,0,268.708
+              c24.205,103.655,154.894,181.678,256.001,181.678s231.794-78.022,256.001-181.678C487.795,165.052,357.106,87.03,256.001,87.03z" />
+              <g>
+                <path style="fill:#FFFFFF;" d="M107.355,326.514l-41.29-66.065c0,0,74.323-90.839,148.645-33.032L107.355,326.514z" />
+                <path style="fill:#FFFFFF;" d="M404.646,326.514l41.29-66.065c0,0-74.323-90.839-148.645-33.032L404.646,326.514z" />
+              </g>
+              <g>
+                <path style="fill:#464655;" d="M256.001,433.87c-24.774,0-140.387-24.774-181.678-123.871c0,0,30.034-84.095,110.593-93.472
+                c24.78-2.884,46.31,17.233,46.31,42.18l0,0c0,37.204-18.593,71.945-49.548,92.582l0,0L256.001,433.87z" />
+                <path style="fill:#464655;" d="M256.001,433.87c24.774,0,140.387-24.774,181.678-123.871c0,0-30.034-84.095-110.593-93.472
+                c-24.78-2.884-46.31,17.233-46.31,42.18l0,0c0,37.204,18.593,71.945,49.548,92.582l0,0L256.001,433.87z" />
+              </g>
+              <g>
+                <ellipse style="fill:#FFFFFF;" cx="256.001" cy="371.934" rx="82.581" ry="61.936" />
+                <circle style="fill:#FFFFFF;" cx="193.064" cy="257.322" r="19.644" />
+                <circle style="fill:#FFFFFF;" cx="318.937" cy="257.322" r="19.644" />
+              </g>
+              <ellipse style="fill:#464655;" cx="256.001" cy="363.676" rx="41.29" ry="28.903" />
+            </svg>            
+          </div>
+          <span>Rackoon</span>
+        </div>
+      </header>
+      <div class="container">
+        <h1>Welcome to Rackoon</h1>
+        <div class="login-button">
+          <button onclick="googleLogin()">
+            Login with Google
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="main" style="display: none">
+    </div>
   </body>
 </html>
