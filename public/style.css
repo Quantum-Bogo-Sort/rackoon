@@ -1,6 +1,8 @@
 :root {
   --main-bg-color: #F0E9D7;
   --main-text-color: #241612;
+  --main-color: #204A32;
+  --main-color-hover: #306145;
 }
 
 body {
@@ -53,15 +55,15 @@ body {
   font-family: 'Anton', sans-serif;
 }
 
-.login-button {
+.login {
   margin: auto;
   display: flex;
 }
 
 
-.login-button button {
+.login button {
   margin: auto;
-  background-color: #204A32;
+  background-color: var(--main-color);
   font-weight: bold;
   color: white;
   padding: 1rem;
@@ -70,8 +72,8 @@ body {
   cursor: pointer;
 }
 
-.login-button button:hover {
-  background-color: #306145;
+.login button:hover {
+  background-color: var(--main-color-hover);
   transform: scale(1.1);
 }
 
