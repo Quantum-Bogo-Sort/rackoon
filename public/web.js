@@ -28,30 +28,40 @@ async function onLoggedIn(user) {
     app.mount('#app');
     let foods = await getFoods();
 
-    foods.forEach(element => {
+    let i = 0;
+    foods.forEach((element) => {
         const foodData = element.data();
-
+        if (i % 4 === 0) addRow();
         addFoodElement(foodData, element.id);
+        i++;
     })
 }
 
+function addRow() {
+    const row = document.createElement('div');
+    row.classList.add('card-container');
+
+    document.querySelector('.shop-items').appendChild(row);
+}
+
 function addFoodElement(foodData, id) {
-    const productContainer = document.querySelector('#product-container');
+    const lastRow = document.querySelector('.card-container:last-child');
 
-    const div = document.createElement('div');
-    div.classList.add('product');
+    const foodItem = document.createElement('div');
+    foodItem.classList.add('food-item');
 
-    const text = document.createElement('p');
-    text.textContent = `${foodData.name} - $${foodData.price} weight: ${foodData.weight}`;
+    foodItem.innerHTML = `<h3>${foodData.name}</h3><p>$${foodData.price}</p>`;
 
     const button = document.createElement('button');
     button.textContent = "Add to cart";
+    button.classList.add('btn');
     button.addEventListener('click', () => {
         addToCart(id);
     });
 
-    div.append(text, button);
-    productContainer.appendChild(div);
+    foodItem.appendChild(button);
+
+    lastRow.appendChild(foodItem);
 }
 
 (function init() {
