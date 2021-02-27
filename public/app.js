@@ -12,18 +12,11 @@ class Cart{
         this.price = price;
     }
 
-    get Price() {
-        return this.calcPrice();
-    }
-
-    calcPrice() {
-
-    }
-
     async add(id,weight){
         const db = firebase.firestore();
         let canAdd = true;
-        let toCmp = await db.collection("foods").doc(id).get();
+        let foodRef = db.collection("foods").doc(id)
+        let toCmp =await foodRef.get();
         // CAN ADD ONLY ITEMS FROM ONE STORE
         // for await (element of cart) 
         // {
@@ -37,7 +30,13 @@ class Cart{
         //     }
 
         // }
-        let price_per_unit = toCmp.data().price / toCmp.data().weight;
+        let price_per_unit = 0;
+        if(foodRef.get("reduced")!=null){
+            price_per_unit = toCmp.data().reduced / toCmp.data().weight;
+        }
+        else{
+            price_per_unit = toCmp.data().price / toCmp.data().weight;
+        }
         let price = price_per_unit*weight;
         if(toCmp.data().weight<weight)
         {
@@ -73,9 +72,8 @@ class Cart{
 
             const elemRef = db.collection("foods").doc(elem.id);
             let curr = await elemRef.get();
-            let price_per_unit = curr.data().price/curr.data().weight;
             elemRef.update({
-                price: curr.data().price - price_per_unit*elem.weight,
+                price: curr.data().price - elem.price,
                 weight: curr.data().weight-elem.weight
             })
             .then(()=>{
