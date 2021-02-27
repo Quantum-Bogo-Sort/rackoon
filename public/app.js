@@ -46,6 +46,7 @@ class Cart{
         {
             this.items.push({id, weight, price});
             this.price+=price;
+            return {id, weight, price};
         }
         else
         {

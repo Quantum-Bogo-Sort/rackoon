@@ -32,14 +32,43 @@ function addCartButtonListeners() {
     recipesBtn.addEventListener('click', () => {
         setActiveCategory('recipes');
     });
+
+    const buyButton = document.querySelector('#buy-button');
+    buyButton.addEventListener('click', onBuy);
+
+    const emptyCartButton = document.querySelector('#empty-cart-btn');
+    emptyCartButton.addEventListener('click', () => {
+        emptyCart();
+    })
+}
+
+function onBuy() {
+    if (cart.items.length) {
+        alert('Purchase successful');
+    } else {
+        alert('Cart is empty!');
+    }
+}
+
+function emptyCart() {
+    const cartItems = document.querySelector('.cart-items');
+    cartItems.innerHTML = '';
+
+    cart.items = [];
+    cart.price = 0;
+
+    const totalPriceDiv = document.querySelector('#total-price')
+    totalPriceDiv.textContent = cart.price;
 }
 
 async function onLoginButtonClick() {
     const authResult = await googleLogin();
-    onLoggedIn(authResult.user);
+    onLoggedIn(authResult);
 }
 
-async function onLoggedIn(user) {
+async function onLoggedIn({user, type}) {
+    console.log(type);
+    user = user.user;
     const app = Vue.createApp({
         data() {
             return {
@@ -122,7 +151,7 @@ async function addRecipes() {
 }
 
 function addRecipeElement(recipe) {
-    console.log(recipe.recipe.data().name);
+    console.log(recipe);
 
     const lastRow = document.querySelector('.card-container:last-child');
 
@@ -160,7 +189,7 @@ function addRecipeElement(recipe) {
     button.classList.add('btn');
     button.addEventListener('click', () => {
         recipe.offers.forEach(id => {
-            addToCart(id);
+            // addToCart(id);
         });
     });
 
@@ -213,7 +242,8 @@ function addFoodElement(foodData, id) {
     input.type = "number";
     input.id = "quantity";
     input.name = "quantity";
-    input.min = 10;
+    input.value = 100 < foodData.weight ? 100 : foodData.weight;
+    input.min = 10 < foodData.weight ? 10 : foodData.weight;
     input.step = 10;
     input.max = foodData.weight;
 
@@ -246,7 +276,9 @@ function addFoodElement(foodData, id) {
     button.textContent = "Add to cart";
     button.classList.add('btn');
     button.addEventListener('click', () => {
-        addToCart(id, parseInt(input.value));
+        const amount = parseInt(input.value);
+        if (amount == NaN) return;
+        addToCart(foodData, amount, id);
     });
 
     foodItemDiv.appendChild(button);
@@ -254,8 +286,20 @@ function addFoodElement(foodData, id) {
     lastRow.appendChild(foodItemDiv);
 }
 
-function addToCart(foodData, amount, id) {
-    cart.add(id, amount);
+async function addToCart(foodData, amount, id) {
+    const cartItems = document.querySelector('.cart-items');
+    console.log(id, amount);
+    const obj = await cart.add(id, amount);
+    const price = Number.parseFloat(obj.price).toFixed(2)
+
+    const div = document.createElement('div');
+    div.classList.add('cart-item');
+    div.innerHTML = `<span>${foodData.name}</span><span>${amount}g</span><span>$${price}</span>`;
+
+    const totalPriceDiv = document.querySelector('#total-price')
+    totalPriceDiv.textContent = Number.parseFloat(cart.price).toFixed(2);
+
+    cartItems.appendChild(div);
 }
 
 (function init() {
