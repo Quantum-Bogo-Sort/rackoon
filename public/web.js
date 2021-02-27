@@ -2,6 +2,12 @@ function addEventListeners() {
     const loginButton = document.querySelector('#login-button');
 
     loginButton.addEventListener('click', onLoginButtonClick);
+
+    document.addEventListener("DOMContentLoaded", async (event) => {
+        const savings = await getGlobalFoodSaved()
+        const savingsDiv = document.querySelector('#savings');
+        savingsDiv.textContent = savings;
+    });
 }
 
 function addCartButtonListeners() {
@@ -69,7 +75,6 @@ async function onLoginButtonClick() {
 }
 
 async function onLoggedIn({user, type}) {
-    console.log(type);
     user = user.user;
     const app = Vue.createApp({
         data() {
@@ -88,7 +93,7 @@ async function onLoggedIn({user, type}) {
 
     app.mount('#app');
 
-    setActiveCategory('ingredients')
+    setActiveCategory('ingredients');
     addCartButtonListeners();
 }
 
@@ -153,8 +158,6 @@ async function addRecipes() {
 }
 
 function addRecipeElement(recipe) {
-    console.log(recipe);
-
     const lastRow = document.querySelector('.card-container:last-child');
 
     const foodItemDiv = document.createElement('div');
@@ -229,7 +232,6 @@ function addRow() {
 }
 
 function getFormattedDate(date) {
-
     const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"];
     const month = monthNames[date.getMonth()];
@@ -309,7 +311,6 @@ function addFoodElement(foodData, id) {
 
 async function addToCart(foodData, amount, id) {
     const cartItems = document.querySelector('.cart-items');
-    console.log(id, amount);
     const obj = await cart.add(id, amount);
     const price = Number.parseFloat(obj.price).toFixed(2)
 

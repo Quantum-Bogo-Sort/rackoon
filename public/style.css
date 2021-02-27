@@ -269,8 +269,8 @@ body {
 }
 
 .ingredients-container {
-  text-align: left;
   height: 110px;
+  text-align: left;
   overflow: auto;
 }
 
