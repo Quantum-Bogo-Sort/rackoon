@@ -73,17 +73,20 @@ class Cart{
 
             const elemRef = db.collection("foods").doc(elem.id);
             let curr = await elemRef.get();
+            let newW = curr.data().weight - elem.weight;
             elemRef.update({
                 price: curr.data().price - elem.price,
-                weight: curr.data().weight-elem.weight
+                weight: newW
             })
             .then(()=>{
                 console.log("Successfully updated weight and price of elem!");
             })
             .catch((error)=>{
                 console.error("Error while updating elem weight and price", error);
-            })
-            if(curr.data().weight == 0)
+            });
+            const eps = 0.0001;
+            //console.log(curr.data().weight);
+            if(newW <=0)
             {
                 console.log("bruh");
                 removeFoodByDocID(elem.id);
