@@ -3,6 +3,7 @@
   --main-text-color: #241612;
   --main-color: #204A32;
   --main-color-hover: #306145;
+  --secondary-color: #429767;
 }
 
 body {
@@ -68,6 +69,73 @@ body {
   margin: auto;
 }
 
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:20px;
+	right:20px;
+	background-color: var(--secondary-color);
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+  cursor: pointer;
+}
+
+.discount-price {
+  color: var(--main-color-hover);
+}
+
+.discount-price span {
+  text-decoration: line-through;
+  color: #888;
+}
+
+#cart {  
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.cart-content {
+  background-color: #fefefe;
+  margin: auto;
+  right: 100px;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+  height: 80%;
+  border-radius: 10px;
+}
+
+#close-cart {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#close-cart:hover,
+#close-cart:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.my-float{
+	font-size:24px;
+	margin-top:18px;
+}
+
 .savings-info {
   font-size: 1.2rem;
   padding: 1rem;
@@ -118,7 +186,7 @@ body {
   width: calc(25% - 20px);
   border-radius: 10px;
   margin: 10px;
-  height: 200px;
+  height: 230px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 16px;
   text-align: center;
@@ -142,6 +210,7 @@ body {
   display: table;
   clear: both;
 }
+
 @media screen and (max-width: 600px) {
   .food-item {
      width: 95%;
@@ -150,5 +219,16 @@ body {
   .card-container {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .cart-content {
+    background-color: #fefefe;
+    margin: auto;
+    right: 100px;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 95%;
+    height: 80%;
+    border-radius: 10px;
   }
 }
