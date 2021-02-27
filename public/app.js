@@ -1,11 +1,3 @@
-document.addEventListener("DOMContentLoaded", event => {
-
-    const app = firebase.app();
-    // console.log(app);
-    
-    getFoods();
-});
-
 class Cart{
     constructor(items, price) {
         this.items = items;
@@ -96,6 +88,16 @@ class Cart{
     }
 };
 
+let cart;
+document.addEventListener("DOMContentLoaded", event => {
+
+    const app = firebase.app();
+    // console.log(app);
+    cart = new Cart(new Array(),0);
+    // getFoods();
+});
+
+
 async function addFoodSaved(name, ammount)
 {
     const db = firebase.firestore();
@@ -121,7 +123,7 @@ async function getGlobalFoodSaved()
     return curr.data().saved;
 }
 
-let cart = new Cart(new Array(),0);
+
 
 async function googleLogin()
 {
