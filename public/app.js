@@ -150,6 +150,13 @@ function findIndexInCart(id)
     return -1;
 }
 
+async function filterByStore(store)
+{
+    const db = firebase.firestore();
+    let foods = await db.collection("foods").where("store", "==", store).get();
+    return foods;
+}
+
 async function hasIngredients(recipe, offers)
 {
     const db = firebase.firestore();
@@ -166,9 +173,18 @@ async function hasIngredients(recipe, offers)
         else
         {
             foods.forEach(food => {
-                offers.push(food.id);
+                let price_per_unit = 0;
+                if("reduced" in food.data()){
+                    price_per_unit = food.data().reduced / food.data().weight;
+                }
+                else{
+                    price_per_unit = food.data().price / food.data().weight;
+                }
+                let final = ingredients[i+1]*price_per_unit;
+                offers.push({food, final} );
             })
         }
+       
     }
     return true;
 }
