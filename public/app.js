@@ -54,20 +54,18 @@ function removeFoodByDocID(id)
 async function addToCart(id)
 {
     const db = firebase.firestore();
-    const myPromise = new Promise(async (resolve, reject) => {
-        for await (element of cart) {
-            let curr = await db.collection("foods").doc(element).get();
-            let toCmp = await db.collection("foods").doc(id).get();
+    let canAdd = true;
 
-            if(curr.data().store != toCmp.data().store)
-            {
-                resolve(false);
-            }
+    for await (element of cart) 
+    {
+        let curr = await db.collection("foods").doc(element).get();
+        let toCmp = await db.collection("foods").doc(id).get();
+
+        if(curr.data().store != toCmp.data().store)
+        {
+            canAdd = false;
         }
-        resolve(true);
-    });
-
-    const canAdd = await myPromise;
+    }
 
     if(canAdd)
     {
