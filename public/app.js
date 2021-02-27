@@ -31,7 +31,7 @@ class Cart{
 
         // }
         let price = 0;
-        price = getPrice(toCmp.id, weight)
+        price =await getPrice(toCmp.id, weight)
         if(toCmp.data().weight<weight)
         {
             canAdd = false;   
@@ -237,9 +237,9 @@ async function hasIngredients(recipe, offers)
         }
         else
         {
-            foods.forEach(food => {
+            foods.forEach(async food => {
                 let quantity = ingredients[i+1]
-                final = getPrice(food.id, quantity);
+                final = await getPrice(food.id, quantity);
                 offers.push({food, final, quantity});
             })
         }
