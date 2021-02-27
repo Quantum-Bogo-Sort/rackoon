@@ -51,31 +51,90 @@ function removeFoodByDocID(id)
     });
 }
 
-async function addToCart(id)
+async function addToCart(id, weight)
 {
     const db = firebase.firestore();
     let canAdd = true;
+    let toCmp = await db.collection("foods").doc(id).get();
+    // for await (element of cart) 
+    // {
+    //     let curr = await db.collection("foods").doc(element).get();
+    //     let toCmp = await db.collection("foods").doc(id).get();
 
-    for await (element of cart) 
+    //     if(curr.data().store != toCmp.data().store)
+    //     {
+    //         canAdd = false;
+    //         throw 'Element not from the same store';
+    //     }
+        
+    // }
+    if(toCmp.data().weight<weight)
     {
-        let curr = await db.collection("foods").doc(element).get();
-        let toCmp = await db.collection("foods").doc(id).get();
-
-        if(curr.data().store != toCmp.data().store)
-        {
-            canAdd = false;
-        }
+        canAdd = false;   
     }
-
     if(canAdd)
     {
-        cart.push(id);
+        cart.push({id, weight});
     }
     else
     {
-        throw 'Element not from the same store';
+        throw 'Exceeding available element quantity';
     }
 }
+
+function findIndexInCart(id)
+{
+    let len = cart.length;
+    for(let i = 0;i<len;i++)
+    {
+        if(cart[i].id==id)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+function removeFromCart(id)
+{
+    const db = firebase.firestore();
+    let ind = findIndexInCart(id);
+    if(ind!=-1)
+    {
+        cart.splice(ind,1);
+    }
+    else
+    {
+        throw 'Element id not found';
+    }
+}
+
+async function buyCart()
+{
+    const db = firebase.firestore();
+    for (const elem of cart){
+        
+        const elemRef = db.collection("foods").doc(elem.id);
+        let curr = await elemRef.get();
+        console.log(curr.data().weight);
+        elemRef.update({
+            weight: curr.data().weight-elem.weight
+        })
+        .then(()=>{
+            console.log("Successfully updated weight of elem!");
+        })
+        .catch((error)=>{
+            console.error("Error while updating elem weight", error);
+        })
+        if(curr.data().weight == 0)
+        {
+            console.log("bruh");
+            removeFoodByDocID(elem.id);
+        }
+        removeFromCart(elem.id);
+    }
+}
+
 
 async function hasIngredients(recipe, offers)
 {
