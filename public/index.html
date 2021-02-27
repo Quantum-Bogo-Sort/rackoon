@@ -57,12 +57,13 @@
           <div class="avatar">
             <img v-bind:src="avatar" alt="avatar">        
           </div>
-          <span>Welcome, {{name}}</span>
+          <span class="welcome-msg">Welcome, {{name}}</span>
         </div>
       </header>
-      
-      <!-- <button>Ingredients</button>
-      <button>Recipes</button> -->
+      <div class="item-categories">
+        <button id="ingredients-btn" class="category-btn">Ingredients</button>
+        <button id="recipes-btn" class="category-btn active-btn">Recipes</button>
+      </div>
       <div class="shop-items">
       </div>
 
