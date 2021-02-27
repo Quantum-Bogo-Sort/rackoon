@@ -60,12 +60,18 @@ body {
 
 .login {
   margin: auto;
+  margin-top: 1rem;
   display: flex;
 }
 
-
 .login button {
   margin: auto;
+}
+
+.savings-info {
+  font-size: 1.2rem;
+  padding: 1rem;
+  text-align: center;
 }
 
 .btn {
@@ -78,9 +84,9 @@ body {
   cursor: pointer;
 }
 
-.login button:hover {
+.btn:hover {
   background-color: var(--main-color-hover);
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .topbar span {

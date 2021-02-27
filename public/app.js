@@ -77,7 +77,7 @@ async function addToCart(id)
     }
 }
 
-async function hasIngredients(recipe)
+async function hasIngredients(recipe, offers)
 {
     const db = firebase.firestore();
     let ingredients = recipe.data().ingredients;
@@ -88,7 +88,13 @@ async function hasIngredients(recipe)
         const foods = await db.collection("foods").where("name", "==", ingredients[i]).where("weight", ">=", ingredients[i+1]).get();
         if(foods.empty)
         {
-           return false;
+            return false;
+        }
+        else
+        {
+            foods.forEach(food => {
+                offers.push(food.id);
+            })
         }
     }
     return true;
@@ -102,19 +108,19 @@ async function filterRecipes()
      
      let ind = 0;
      let size = recipes.size;
-    recipes.forEach(async (recipe)=>{
-        if(await hasIngredients(recipe))
-        {
-            available_rec.push(recipe);
-        }
-        ind++;
-        if(ind==size)
-        {
-            available_rec.forEach((rec)=>{
-                console.log(rec.data().name);
-            });
-        } 
-    });
-    
-   
+
+     return new Promise((resolve) => {
+         recipes.forEach(async (recipe)=>{
+             let offers = [];
+             if(await hasIngredients(recipe, offers))
+             {
+                 available_rec.push({recipe, offers});
+             }
+             ind++;
+             if(ind==size)
+             {
+                 resolve(available_rec);
+             } 
+         });
+     });
 }
