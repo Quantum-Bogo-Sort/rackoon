@@ -207,8 +207,9 @@ async function hasIngredients(recipe, offers)
                 else{
                     price_per_unit = food.data().price / food.data().weight;
                 }
-                let final = ingredients[i+1]*price_per_unit;
-                offers.push({food, final} );
+                let quantity = ingredients[i+1]
+                let final = quantity*price_per_unit;
+                offers.push({food, final, quantity});
             })
         }
        

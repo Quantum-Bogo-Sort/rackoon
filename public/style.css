@@ -233,6 +233,9 @@ body {
   padding: 16px;
   text-align: center;
   background-color: #f1f1f1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .food-item p {
@@ -265,10 +268,27 @@ body {
   font-weight: bold;
 }
 
+.ingredients-container {
+  text-align: left;
+  height: 110px;
+  overflow: auto;
+}
+
+.item-name {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
 .cart-items {
   height: 80%;
   overflow: auto;
   margin-top: 20px;
+}
+
+.add-to-cart-btn {
+  bottom: 10px;
+  position: absolute;
+  width: 90%; 
 }
 
 .cart-item {

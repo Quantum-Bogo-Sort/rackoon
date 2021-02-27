@@ -45,6 +45,8 @@ function addCartButtonListeners() {
 function onBuy() {
     if (cart.items.length) {
         alert('Purchase successful');
+        cart.buy();
+        emptyCart();
     } else {
         alert('Cart is empty!');
     }
@@ -158,44 +160,58 @@ function addRecipeElement(recipe) {
     const foodItemDiv = document.createElement('div');
     foodItemDiv.classList.add('food-item');
 
-    const foodName = document.createElement('h3');
+    const foodName = document.createElement('span');
+    foodName.classList.add('item-name');
     foodName.textContent = recipe.recipe.data().name;
 
-    // const foodPrice = document.createElement('p');
-
-    // const date = new Date(foodData.expiration.seconds * 1000);
-    // const daysUntilExpirationDiv = document.createElement('h4');
-    // daysUntilExpirationDiv.textContent = `Best before: ${getFormattedDate(date)}`;
-
-    // if (foodData.reduced) {
-    //     foodPrice.classList.add('discount-price');
-    //     foodPrice.textContent = `$${Number.parseFloat(foodData.reduced).toFixed(2)} `;
-
-    //     const oldPrice = document.createElement('span');
-    //     oldPrice.textContent = `$${Number.parseFloat(foodData.price).toFixed(2)}`;
-    //     foodPrice.appendChild(oldPrice);
-
-    // } else {
-    //     foodPrice.textContent = `$${Number.parseFloat(foodData.price).toFixed(2)}`;
-    // }
-
-    // foodItemDiv.append(foodName, foodPrice, daysUntilExpirationDiv);
     const offers = document.createElement('p');
-    offers.textContent = `Ingredients: ${recipe.offers.length}`;
+    offers.textContent = `Ingredients:`;
 
-    foodItemDiv.append(foodName, offers);
+    const ingredients = addIngredients(recipe.offers);
+
+    foodItemDiv.append(foodName, offers, ingredients);
     const button = document.createElement('button');
     button.textContent = "Add to cart";
-    button.classList.add('btn');
+    button.classList.add('btn', 'add-to-cart-btn');
     button.addEventListener('click', () => {
-        recipe.offers.forEach(id => {
-            // addToCart(id);
+        ingredients.querySelectorAll('input').forEach(async (ingredient) => {
+            if (!ingredient.checked) return;
+            else {
+                addToCart({ name: ingredient.name }, parseInt(ingredient.value), ingredient.id);
+            }
         });
+        alert('Added to cart!');
     });
 
     foodItemDiv.appendChild(button);
 
     lastRow.appendChild(foodItemDiv);
+}
+
+function addIngredients(offers) {
+    const container = document.createElement('div');
+    container.classList.add('ingredients-container');
+
+    for (const offer of offers) {
+        const ingredient = document.createElement('div');
+        const input = document.createElement('input');
+        const label = document.createElement('label');
+
+        const price = Number.parseFloat(offer.final).toFixed(2)
+
+        input.type = "checkbox";
+        input.id = offer.food.id;
+        input.name = offer.food.data().name;
+        input.value = offer.quantity;
+        input.checked = true;
+
+        label.for = offer.food.id;
+        label.textContent = `${offer.food.data().name} by ${offer.food.data().store} (${offer.quantity}g) - $${price}`;
+
+        ingredient.append(input, label);
+        container.appendChild(ingredient);
+    }
+    return container;
 }
 
 function getNumOfDays(dateFuture, datePast)
@@ -229,7 +245,8 @@ function addFoodElement(foodData, id) {
     const foodItemDiv = document.createElement('div');
     foodItemDiv.classList.add('food-item');
 
-    const foodName = document.createElement('h3');
+    const foodName = document.createElement('span');
+    foodName.classList.add('item-name')
     foodName.textContent = foodData.name;
 
     const inputDiv = document.createElement('div');
@@ -258,6 +275,9 @@ function addFoodElement(foodData, id) {
     const date = new Date(foodData.expiration.seconds * 1000);
     const daysUntilExpirationDiv = document.createElement('h4');
     daysUntilExpirationDiv.textContent = `Best before: ${getFormattedDate(date)}`;
+    
+    const provider = document.createElement('span');
+    provider.textContent = `Provider: ${foodData.store}`;
 
     if (foodData.reduced) {
         foodPrice.classList.add('discount-price');
@@ -271,14 +291,15 @@ function addFoodElement(foodData, id) {
         foodPrice.textContent = `$${Number.parseFloat(foodData.price).toFixed(2)}`;
     }
 
-    foodItemDiv.append(foodName, foodPrice, inputDiv, daysUntilExpirationDiv);
+    foodItemDiv.append(foodName, foodPrice, inputDiv, daysUntilExpirationDiv, provider);
     const button = document.createElement('button');
     button.textContent = "Add to cart";
-    button.classList.add('btn');
-    button.addEventListener('click', () => {
+    button.classList.add('btn', 'add-to-cart-btn');
+    button.addEventListener('click', async () => {
         const amount = parseInt(input.value);
         if (amount == NaN) return;
-        addToCart(foodData, amount, id);
+        await addToCart(foodData, amount, id);
+        alert('Added to cart!');
     });
 
     foodItemDiv.appendChild(button);
