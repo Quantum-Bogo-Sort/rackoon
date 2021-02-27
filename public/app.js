@@ -98,7 +98,33 @@ async function googleLogin()
 {
     const provider = new firebase.auth.GoogleAuthProvider();
     let user = await firebase.auth().signInWithPopup(provider);
-    return user;
+    //For roles
+    let status = await addUser(user.user.uid);
+    console.log(status);
+    return {user: user, type:status};
+}
+
+//Returns session type
+async function addUser(id)
+{
+    const db = firebase.firestore();
+    let docRef = db.collection("users").doc(id.toString());
+
+    try{
+        const doc = await docRef.get();
+        if (doc.exists) {
+            return doc.data().status;
+        } else {
+            //If user doesn't exist add him/her
+            db.collection("users").doc(id).set({status: "user"});
+            return "user";
+        }
+    }
+    catch(e)
+    {
+        db.collection("users").doc(id).set({status: "user"});
+        return "user";
+    }
 }
 
 async function getFoods()
