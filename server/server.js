@@ -21,7 +21,7 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
-setInterval(reducePricesInDB, 500, 'test');
+setInterval(reducePricesInDB, 1*1000*60 , 'test');
 
 //
 async function printFoode() //This is just for testing at the moment
