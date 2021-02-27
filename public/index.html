@@ -22,7 +22,7 @@
       to avoid connecting the SDK to running emulators.
     -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
+    <script src="https://kit.fontawesome.com/ab4fa47ce5.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/vue@next"></script>
@@ -30,7 +30,7 @@
     <script defer src="web.js"></script>
   </head>
   <body>
-    <div class="login-page" style="display: blockz;">
+    <div class="login-page" style="display: block;">
       <header>
         <div class="topbar">
           <div class="small-logo">
@@ -60,8 +60,21 @@
           <span>Welcome, {{name}}</span>
         </div>
       </header>
+      
+      <!-- <button>Ingredients</button>
+      <button>Recipes</button> -->
       <div class="shop-items">
       </div>
+
+      <div id="cart">
+        <div class="cart-content">
+          <span id="close-cart">&times;</span>
+          <p>Your cart is currently empty.</p>
+        </div>
+      </div>
+      <a class="float" id="cart-button">
+        <i class="fa fa-shopping-cart my-float"></i>
+      </a>
     </div>
   </body>
 </html>
