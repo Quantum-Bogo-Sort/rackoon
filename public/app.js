@@ -47,6 +47,10 @@ class Cart{
             throw 'Exceeding available element quantity';
         }
     }
+    empty() {
+        this.items = [];
+        this.price = 0;
+    }
 
     remove(id){
         let ind = findIndexInCart(id);
@@ -57,7 +61,7 @@ class Cart{
         }
         else
         {
-            throw 'Element id not found';
+            throw 'Element id not found in cart!';
         }
     }
 
@@ -86,8 +90,9 @@ class Cart{
                 console.log("bruh");
                 removeFoodByDocID(elem.id);
             }
-            this.remove(elem.id);
+            //this.remove(elem.id);
         }
+        this.empty();
     }
 };
 
