@@ -152,7 +152,7 @@ function addRecipeElement(recipe) {
 
     // foodItemDiv.append(foodName, foodPrice, daysUntilExpirationDiv);
     const offers = document.createElement('p');
-    offers.textContent = `Ingredient offers: ${recipe.offers.length}`;
+    offers.textContent = `Ingredients: ${recipe.offers.length}`;
 
     foodItemDiv.append(foodName, offers);
     const button = document.createElement('button');
@@ -203,6 +203,26 @@ function addFoodElement(foodData, id) {
     const foodName = document.createElement('h3');
     foodName.textContent = foodData.name;
 
+    const inputDiv = document.createElement('div');
+    inputDiv.style.display = 'flex';
+    inputDiv.style.justifyContent = 'center';
+    inputDiv.style.alignItems = 'center';
+    inputDiv.style.gap = '10px';
+
+    const input = document.createElement('input');
+    input.type = "number";
+    input.id = "quantity";
+    input.name = "quantity";
+    input.min = 10;
+    input.step = 10;
+    input.max = foodData.weight;
+
+    const label = document.createElement('label')
+    label.for = "quantity";
+    label.textContent = `Quantity (${foodData.weight}g available): `;
+
+    inputDiv.append(label, input);
+
     const foodPrice = document.createElement('p');
 
     const date = new Date(foodData.expiration.seconds * 1000);
@@ -221,17 +241,21 @@ function addFoodElement(foodData, id) {
         foodPrice.textContent = `$${Number.parseFloat(foodData.price).toFixed(2)}`;
     }
 
-    foodItemDiv.append(foodName, foodPrice, daysUntilExpirationDiv);
+    foodItemDiv.append(foodName, foodPrice, inputDiv, daysUntilExpirationDiv);
     const button = document.createElement('button');
     button.textContent = "Add to cart";
     button.classList.add('btn');
     button.addEventListener('click', () => {
-        addToCart(id);
+        addToCart(id, parseInt(input.value));
     });
 
     foodItemDiv.appendChild(button);
 
     lastRow.appendChild(foodItemDiv);
+}
+
+function addToCart(foodData, amount, id) {
+    cart.add(id, amount);
 }
 
 (function init() {

@@ -28,6 +28,7 @@
     <script src="https://unpkg.com/vue@next"></script>
     <script src="app.js"></script>
     <script defer src="web.js"></script>
+    <link rel="shortcut icon" type="image/png" href="./assets/favicon.png"/>
   </head>
   <body>
     <div class="login-page" style="display: block;">
@@ -70,7 +71,13 @@
       <div id="cart">
         <div class="cart-content">
           <span id="close-cart">&times;</span>
-          <p>Your cart is currently empty.</p>
+          <div class="cart-items">
+            <!-- <p>Your cart is currently empty.</p> -->
+            <div class="cart-item"><span>Rice</span> <span>50g</span> <span>$0.5</span></div>
+            <div class="cart-item"><span>Rice</span> <span>50g</span> <span>$0.5</span></div>
+            <div class="cart-item"><span>Rice</span> <span>50g</span> <span>$0.5</span></div>
+            <div class="cart-item"><span>Rice</span> <span>50g</span> <span>$0.5</span></div>
+          </div>
         </div>
       </div>
       <a class="float" id="cart-button">
