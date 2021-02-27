@@ -31,7 +31,7 @@ class Cart{
 
         // }
         let price_per_unit = 0;
-        if(foodRef.get("reduced")!=null){
+        if("reduced" in toCmp.data()){
             price_per_unit = toCmp.data().reduced / toCmp.data().weight;
         }
         else{
