@@ -30,14 +30,8 @@ class Cart{
         //     }
 
         // }
-        let price_per_unit = 0;
-        if("reduced" in toCmp.data()){
-            price_per_unit = toCmp.data().reduced / toCmp.data().weight;
-        }
-        else{
-            price_per_unit = toCmp.data().price / toCmp.data().weight;
-        }
-        let price = price_per_unit*weight;
+        let price = 0;
+        price = getPrice(toCmp.id, weight)
         if(toCmp.data().weight<weight)
         {
             canAdd = false;   
@@ -138,6 +132,21 @@ async function getFoods()
     return foods;
 }
 
+async function getPrice(id, amount)
+{
+    const db = firebase.firestore();
+    let food = await db.collection("foods").doc(id).get();
+    let price = 0;
+    if("reduced" in food.data()) {
+        price = (food.data().reduced / food.data().weight )*amount;
+    }
+    else {
+        price = (food.data().price / food.data().weight)*amount;
+    }
+    
+    return price;
+}
+
 function addFood(category, expiration, name, price, weight, store)
 {
     const db = firebase.firestore();
@@ -203,15 +212,8 @@ async function hasIngredients(recipe, offers)
         else
         {
             foods.forEach(food => {
-                let price_per_unit = 0;
-                if("reduced" in food.data()){
-                    price_per_unit = food.data().reduced / food.data().weight;
-                }
-                else{
-                    price_per_unit = food.data().price / food.data().weight;
-                }
                 let quantity = ingredients[i+1]
-                let final = quantity*price_per_unit;
+                final = getPrice(food.id, quantity);
                 offers.push({food, final, quantity});
             })
         }
