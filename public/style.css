@@ -137,7 +137,7 @@ body {
   clear: both;
 }
 @media screen and (max-width: 600px) {
-  .card {
+  .food-item {
      width: 95%;
   }
 
