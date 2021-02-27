@@ -76,3 +76,45 @@ async function addToCart(id)
         throw 'Element not from the same store';
     }
 }
+
+async function hasIngredients(recipe)
+{
+    const db = firebase.firestore();
+    let ingredients = recipe.data().ingredients;
+    let len = ingredients.length;
+    for(let i = 0; i < len-1; i+=2)
+    {
+        canAdd = true;
+        const foods = await db.collection("foods").where("name", "==", ingredients[i]).where("weight", ">=", ingredients[i+1]).get();
+        if(foods.empty)
+        {
+           return false;
+        }
+    }
+    return true;
+}
+
+async function filterRecipes()
+{
+     const db = firebase.firestore();
+     let recipes =await db.collection("recipes").get();
+     let available_rec = [];
+     
+     let ind = 0;
+     let size = recipes.size;
+    recipes.forEach(async (recipe)=>{
+        if(await hasIngredients(recipe))
+        {
+            available_rec.push(recipe);
+        }
+        ind++;
+        if(ind==size)
+        {
+            available_rec.forEach((rec)=>{
+                console.log(rec.data().name);
+            });
+        } 
+    });
+    
+   
+}
