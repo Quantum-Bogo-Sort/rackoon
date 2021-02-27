@@ -199,6 +199,22 @@ function addFood(category, expiration, name, price, weight, store)
     });
 }
 
+function addRecipe(name, ingredients, rating = 0)
+{
+    const db = firebase.firestore();
+    db.collection("recipes").add({
+        name: name,
+        ingredients: ingredients,
+        rating: rating
+    })
+    .then((docRef)=>{
+        console.log("Recipe written with ID: ", docRef.id);
+    })
+    .catch((error)=>{
+        console.error("Error adding recipe: ", error);
+    })
+}
+
 function removeFoodByDocID(id)
 {
     const db = firebase.firestore();
