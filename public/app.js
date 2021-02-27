@@ -73,6 +73,7 @@ class Cart{
                 weight: newW
             })
             .then(()=>{
+                addFoodSaved(curr.data().store, elem.weight);
                 console.log("Successfully updated weight and price of elem!");
             })
             .catch((error)=>{
@@ -89,6 +90,31 @@ class Cart{
         }
     }
 };
+
+async function addFoodSaved(name, ammount)
+{
+    const db = firebase.firestore();
+    //The name of the store is the id
+    const store = db.collection("stores").doc(name);
+    let curr = await store.get();
+    store.update({
+        saved: curr.data().saved + ammount
+    })
+    .then( ()=> {
+        console.log("Successfully saved weight!");
+    })
+    .catch((error)=>{
+        console.error("Error while updating saved weight!", error);
+    });
+}
+
+async function getGlobalFoodSaved()
+{
+    const db = firebase.firestore();
+    const store = db.collection("stores").doc("ALL");
+    let curr = await store.get();
+    return curr.data().saved;
+}
 
 let cart = new Cart(new Array(),0);
 

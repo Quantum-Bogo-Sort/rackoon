@@ -21,8 +21,8 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
-setInterval(reducePricesInDB, 1*1000*60 , 'test');
-
+setInterval(reducePricesInDB, 1*1000*60 , 'reduce');
+setInterval(updateGlobalFoodSaved, 500 , 'savedSum');
 //
 async function printFoode() //This is just for testing at the moment
 {
@@ -78,4 +78,22 @@ async function reducePricesInDB()
           admin.firestore().collection("foods").doc(element.id).set(toReplace);
         }
     });
+}
+
+async function updateGlobalFoodSaved()
+{
+  const stores = await admin
+    .firestore()
+    .collection('stores').get();
+
+  let savedSum = 0;
+  stores.forEach(element => {
+    if(element.id != "ALL")
+      savedSum += element.data().saved;
+  });
+  await admin
+    .firestore()
+    .collection('stores')
+    .doc("ALL")
+    .update({saved: savedSum});
 }
