@@ -17,7 +17,7 @@ function addCartButtonListeners() {
     cartButton.addEventListener('click', () => {
         cartModal.style.display = "block";
     });
-    
+
     closeCart.addEventListener('click', () => {
         cartModal.style.display = "none";
     });
@@ -191,6 +191,33 @@ function addRecipeElement(recipe) {
     lastRow.appendChild(foodItemDiv);
 }
 
+function getPriceLocal(foodData, amount) {
+    // let price = 0;
+    
+    // if(foodData.reduced) {
+    //     price = (foodData.reduced / foodData.weight )*amount;
+    // }
+    // else {
+    //     price = (foodData.price / foodData.weight)*amount;
+    // }
+    
+    // return price;
+    let price = 0;
+    let reducedPrice = null;
+    
+    if(foodData.reduced) {
+        reducedPrice = (foodData.reduced / foodData.weight ) * amount;
+    }
+
+    price = (foodData.price / foodData.weight) * amount;
+    
+    
+    return {
+        price,
+        reducedPrice,
+    };
+}
+
 function addIngredients(offers) {
     const container = document.createElement('div');
     container.classList.add('ingredients-container');
@@ -280,18 +307,25 @@ function addFoodElement(foodData, id) {
     
     const provider = document.createElement('span');
     provider.textContent = `Provider: ${foodData.store}`;
+    
+    input.onchange = updatePrice;
 
-    if (foodData.reduced) {
-        foodPrice.classList.add('discount-price');
-        foodPrice.textContent = `$${Number.parseFloat(foodData.reduced).toFixed(2)} `;
-
-        const oldPrice = document.createElement('span');
-        oldPrice.textContent = `$${Number.parseFloat(foodData.price).toFixed(2)}`;
-        foodPrice.appendChild(oldPrice);
-
-    } else {
-        foodPrice.textContent = `$${Number.parseFloat(foodData.price).toFixed(2)}`;
+    function updatePrice() {
+        const prices = getPriceLocal(foodData, input.value);
+        if (prices.reducedPrice) {
+            foodPrice.classList.add('discount-price');
+            foodPrice.textContent = `$${Number.parseFloat(prices.reducedPrice).toFixed(2)} `;
+    
+            const oldPrice = document.createElement('span');
+            oldPrice.textContent = `$${Number.parseFloat(prices.price).toFixed(2)}`;
+            foodPrice.appendChild(oldPrice);
+    
+        } else {
+            foodPrice.textContent = `$${Number.parseFloat(prices.price).toFixed(2)}`;
+        }
     }
+
+    updatePrice();
 
     foodItemDiv.append(foodName, foodPrice, inputDiv, daysUntilExpirationDiv, provider);
     const button = document.createElement('button');
