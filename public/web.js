@@ -152,7 +152,7 @@ function addRecipeElement(recipe) {
 
     // foodItemDiv.append(foodName, foodPrice, daysUntilExpirationDiv);
     const offers = document.createElement('p');
-    offers.textContent = `Ingredient offers: ${recipe.offers.length}`;
+    offers.textContent = `Ingredients: ${recipe.offers.length}`;
 
     foodItemDiv.append(foodName, offers);
     const button = document.createElement('button');
