@@ -228,7 +228,7 @@ body {
   width: calc(25% - 20px);
   border-radius: 10px;
   margin: 10px;
-  height: 230px;
+  height: 270px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 16px;
   text-align: center;
@@ -239,6 +239,16 @@ body {
   font-size: 18px;
 }
 
+.cart-items {
+  padding-top: 40px;
+}
+
+.cart-item {
+  border: 1px solid black;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+}
 /* .shop-items {
   padding-top: 10rem;
 } */
