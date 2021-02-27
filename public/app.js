@@ -73,9 +73,10 @@ class Cart{
 
             const elemRef = db.collection("foods").doc(elem.id);
             let curr = await elemRef.get();
+            let newW = curr.data().weight - elem.weight;
             elemRef.update({
                 price: curr.data().price - elem.price,
-                weight: curr.data().weight-elem.weight
+                weight: newW
             })
             .then(()=>{
                 addFoodSaved(curr.data().store, elem.weight);
@@ -83,8 +84,10 @@ class Cart{
             })
             .catch((error)=>{
                 console.error("Error while updating elem weight and price", error);
-            })
-            if(curr.data().weight == 0)
+            });
+            const eps = 0.0001;
+            //console.log(curr.data().weight);
+            if(newW <=0)
             {
                 console.log("bruh");
                 removeFoodByDocID(elem.id);
@@ -233,8 +236,9 @@ async function hasIngredients(recipe, offers)
                 else{
                     price_per_unit = food.data().price / food.data().weight;
                 }
-                let final = ingredients[i+1]*price_per_unit;
-                offers.push({food, final} );
+                let quantity = ingredients[i+1]
+                let final = quantity*price_per_unit;
+                offers.push({food, final, quantity});
             })
         }
        
