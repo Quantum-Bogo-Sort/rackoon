@@ -144,7 +144,9 @@ async function addUser(id)
     try{
         const doc = await docRef.get();
         if (doc.exists) {
-            return doc.data().status;
+            const data = doc.data();
+            // console.log(data);
+            return data;
         } else {
             //If user doesn't exist add him/her
             db.collection("users").doc(id).set({status: "user"});

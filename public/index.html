@@ -24,6 +24,8 @@
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
     <script src="https://kit.fontawesome.com/ab4fa47ce5.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/vue@next"></script>
     <script src="app.js"></script>
@@ -32,18 +34,19 @@
   </head>
   <body>
     <div class="login-page" style="display: block;">
-      <header>
+      <!-- <header>
         <div class="topbar">
           <div class="small-logo">
             <img src="./assets/logo.png" alt="Rackoon logo">        
           </div>
           <span>Rackoon</span>
         </div>
-      </header>
+      </header> -->
       <div class="container">
         <h1>Welcome to Rackoon</h1>
         <div class="savings-info">
-          <span>Kilograms of food not thrown away so far: </span><b id="savings"></b>
+          <b id="savings"></b>
+          <span>Kilograms of food not thrown away so far.</span>
         </div>
         <div class="login">
           <button id="login-button" class="btn"> 
@@ -61,28 +64,105 @@
           <span class="welcome-msg">Welcome, {{name}}</span>
         </div>
       </header>
-      <div class="item-categories">
-        <button id="ingredients-btn" class="category-btn">Ingredients</button>
-        <button id="recipes-btn" class="category-btn active-btn">Recipes</button>
-      </div>
-      <div class="shop-items">
+      <div id="user-content" style="display: none">
+        <div class="item-categories">
+          <button id="ingredients-btn" class="category-btn">Ingredients</button>
+          <button id="recipes-btn" class="category-btn active-btn">Recipes</button>
+        </div>
+        <div class="shop-items">
+        </div>
+  
+        <div id="cart">
+          <div class="cart-content">
+            <span id="close-cart">&times;</span>
+            <div class="cart-items">
+            </div>
+            <div class="total-price-container">Total price: $<span id="total-price">0</span></div>
+            <div class="cart-buttons">
+              <button class="btn" id="buy-button">Buy</button>
+              <button class="btn" id="empty-cart-btn">Empty Cart</button>
+            </div>
+          </div>
+        </div>
+        <a class="float" id="cart-button">
+          <i class="fa fa-shopping-cart my-float"></i>
+        </a>
       </div>
 
-      <div id="cart">
-        <div class="cart-content">
-          <span id="close-cart">&times;</span>
-          <div class="cart-items">
-          </div>
-          <div class="total-price-container">Total price: $<span id="total-price">0</span></div>
-          <div class="cart-buttons">
-            <button class="btn" id="buy-button">Buy</button>
-            <button class="btn" id="empty-cart-btn">Empty Cart</button>
+      <div id="shop-owner-content" style="display: none">
+        
+        <span>Listings for <span id='store-name'></span></span>
+        <table id="listings">
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+          </tr>
+          <!-- <tr>
+            <td>Alfreds Futterkiste</td>
+            <td>Maria Anders</td>
+            <td>Germany</td>
+          </tr>
+          <tr>
+            <td>Berglunds snabbköp</td>
+            <td>Christina Berglund</td>
+            <td>Sweden</td>
+          </tr>
+          <tr>
+            <td>Centro comercial Moctezuma</td>
+            <td>Francisco Chang</td>
+            <td>Mexico</td>
+          </tr>
+          <tr>
+            <td>Ernst Handel</td>
+            <td>Roland Mendel</td>
+            <td>Austria</td>
+          </tr>
+          <tr>
+            <td>Island Trading</td>
+            <td>Helen Bennett</td>
+            <td>UK</td>
+          </tr>
+          <tr>
+            <td>Königlich Essen</td>
+            <td>Philip Cramer</td>
+            <td>Germany</td>
+          </tr>
+          <tr>
+            <td>Laughing Bacchus Winecellars</td>
+            <td>Yoshi Tannamuri</td>
+            <td>Canada</td>
+          </tr>
+          <tr>
+            <td>Magazzini Alimentari Riuniti</td>
+            <td>Giovanni Rovelli</td>
+            <td>Italy</td>
+          </tr>
+          <tr>
+            <td>North/South</td>
+            <td>Simon Crowther</td>
+            <td>UK</td>
+          </tr>
+          <tr>
+            <td>Paris spécialités</td>
+            <td>Marie Bertrand</td>
+            <td>France</td>
+          </tr> -->
+        </table>
+        <button class="btn add-item-btn">Add Item</button>
+        <div id="cart">
+          <div class="cart-content">
+            <!-- <span id="close-cart">&times;</span>
+            <div class="cart-items">
+            </div>
+            <div class="total-price-container">Total price: $<span id="total-price">0</span></div>
+            <div class="cart-buttons"> -->
+              <button class="btn" id="buy-button">Submit</button>
+            </div>
           </div>
         </div>
       </div>
-      <a class="float" id="cart-button">
-        <i class="fa fa-shopping-cart my-float"></i>
-      </a>
+
     </div>
   </body>
 </html>

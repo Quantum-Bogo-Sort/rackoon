@@ -76,6 +76,7 @@ async function onLoginButtonClick() {
 
 async function onLoggedIn({user, type}) {
     user = user.user;
+    const { status, store } = type;
     const app = Vue.createApp({
         data() {
             return {
@@ -91,10 +92,50 @@ async function onLoggedIn({user, type}) {
     const appElement = document.querySelector('#app');
     appElement.style.display = "block";
 
+    // console.log(status);
+
+    const storeName = document.querySelector('#store-name');
+    storeName.textContent = store; 
+
+    if (status === 'owner') {
+        const ownerContent = document.querySelector('#shop-owner-content');
+        ownerContent.style.display = "flex";
+        addListings(store);
+
+    } else if (status === 'user') {
+        const userContent = document.querySelector('#user-content');
+        userContent.style.display = 'block';
+    }
+
     app.mount('#app');
 
     setActiveCategory('ingredients');
     addCartButtonListeners();
+}
+
+async function addListings(store) {
+    const foods = await filterByStore(store);
+    console.log(foods);
+    const listings = document.querySelector('#listings');
+     
+    foods.forEach(food => {
+        const tr = document.createElement('tr');
+        const data = food.data();
+        tr.innerHTML = `
+            <td>${data.name}</td>
+            <td>${data.weight / 1000}kg</td>
+            <td>${Number.parseFloat(data.price).toFixed(2)}</td>
+        `;
+        listings.appendChild(tr);
+    });
+
+    // foods.
+//     <!-- <tr>
+//     <td>Alfreds Futterkiste</td>
+//     <td>Maria Anders</td>
+//     <td>Germany</td>
+//   </tr>
+
 }
 
 async function addFoods() {
@@ -192,16 +233,6 @@ function addRecipeElement(recipe) {
 }
 
 function getPriceLocal(foodData, amount) {
-    // let price = 0;
-    
-    // if(foodData.reduced) {
-    //     price = (foodData.reduced / foodData.weight )*amount;
-    // }
-    // else {
-    //     price = (foodData.price / foodData.weight)*amount;
-    // }
-    
-    // return price;
     let price = 0;
     let reducedPrice = null;
     
