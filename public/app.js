@@ -237,10 +237,17 @@ async function hasIngredients(recipe, offers)
         }
         else
         {
-            foods.forEach(async food => {
-                let quantity = ingredients[i+1]
-                final = await getPrice(food.id, quantity);
-                offers.push({food, final, quantity});
+            foods.forEach(food => {
+                let price_per_unit = 0;
+                if("reduced" in food.data()){
+                    price_per_unit = food.data().reduced / food.data().weight;
+                }
+                else{
+                    price_per_unit = food.data().price / food.data().weight;
+                }
+                let quantity= ingredients[i+1];
+                let final = quantity*price_per_unit;
+                offers.push({food, final,quantity } );
             })
         }
        
