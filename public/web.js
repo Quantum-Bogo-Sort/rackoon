@@ -6,7 +6,7 @@ function addEventListeners() {
     document.addEventListener("DOMContentLoaded", async (event) => {
         const savings = await getGlobalFoodSaved()
         const savingsDiv = document.querySelector('#savings');
-        savingsDiv.textContent = savings;
+        savingsDiv.textContent = Number.parseFloat(savings / 1000).toFixed(2);
     });
 }
 
@@ -17,7 +17,7 @@ function addCartButtonListeners() {
     cartButton.addEventListener('click', () => {
         cartModal.style.display = "block";
     });
-
+    
     closeCart.addEventListener('click', () => {
         cartModal.style.display = "none";
     });
