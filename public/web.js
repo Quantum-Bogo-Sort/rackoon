@@ -10,6 +10,41 @@ function addEventListeners() {
     });
 }
 
+function addFormListeners(store) {
+    const formModal = document.querySelector('#form-container');
+    const closeForm = document.querySelector('#close-form');
+    const openFormBtn = document.querySelector('.add-item-btn');
+    
+    openFormBtn.addEventListener('click', () => {
+        formModal.style.display = "block";
+    });
+
+    closeForm.addEventListener('click', () => {
+        formModal.style.display = "none";
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target == formModal) {
+            formModal.style.display = "none";
+        }
+    });
+
+    const form = document.querySelector('#add-item-form');
+    const expirationInput = document.querySelector('#expiration');
+    expirationInput.min = getMinExpirationDate();
+
+    const nameInput = document.querySelector('#food-name');
+    const quantityInput = document.querySelector('#quantity');
+    const categoryInput = document.querySelector('#category');
+    const priceInput = document.querySelector('#price');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        addFood(categoryInput.value, new Date(expirationInput.value), nameInput.value, Number(priceInput.value), Number(quantityInput.value), store);
+        alert('Item added successfully!');
+    });
+}
+
 function addCartButtonListeners() {
     const cartModal = document.querySelector('#cart');
     const closeCart = document.querySelector('#close-cart');
@@ -71,6 +106,7 @@ function emptyCart() {
 
 async function onLoginButtonClick() {
     const authResult = await googleLogin();
+    console.log(authResult);
     onLoggedIn(authResult);
 }
 
@@ -80,7 +116,7 @@ async function onLoggedIn({user, type}) {
     const app = Vue.createApp({
         data() {
             return {
-                name: user.displayName,
+                name: store || user.displayName,
                 avatar: user.photoURL,
             }
         }
@@ -92,8 +128,6 @@ async function onLoggedIn({user, type}) {
     const appElement = document.querySelector('#app');
     appElement.style.display = "block";
 
-    // console.log(status);
-
     const storeName = document.querySelector('#store-name');
     storeName.textContent = store; 
 
@@ -102,7 +136,7 @@ async function onLoggedIn({user, type}) {
         ownerContent.style.display = "flex";
         addListings(store);
 
-    } else if (status === 'user') {
+    } else if (status === 'user' || status == null) {
         const userContent = document.querySelector('#user-content');
         userContent.style.display = 'block';
     }
@@ -111,20 +145,22 @@ async function onLoggedIn({user, type}) {
 
     setActiveCategory('ingredients');
     addCartButtonListeners();
+    if (store != null) addFormListeners(store);
 }
 
 async function addListings(store) {
     const foods = await filterByStore(store);
-    console.log(foods);
     const listings = document.querySelector('#listings');
      
     foods.forEach(food => {
         const tr = document.createElement('tr');
         const data = food.data();
+        const price = data.reduced || data.price;
+
         tr.innerHTML = `
             <td>${data.name}</td>
             <td>${data.weight / 1000}kg</td>
-            <td>${Number.parseFloat(data.price).toFixed(2)}</td>
+            <td>$${Number.parseFloat(price).toFixed(2)}</td>
         `;
         listings.appendChild(tr);
     });
@@ -296,6 +332,18 @@ function getFormattedDate(date) {
     const day = String(date.getDate()).padStart(2, '0');
     const year = date.getFullYear();
     const output = month  + '\n'+ day  + ' ' + year;
+    return output;
+}
+
+// sorry for code duplication :p
+function getMinExpirationDate() {
+    const date = new Date();
+    date.setDate(date.getDate() + 3);
+
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = date.getFullYear();
+    const output = `${year}-${month}-${day}`;
     return output;
 }
 

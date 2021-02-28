@@ -61,7 +61,7 @@
           <div class="avatar">
             <img v-bind:src="avatar" alt="avatar">        
           </div>
-          <span class="welcome-msg">Welcome, {{name}}</span>
+          <span class="welcome-msg">{{name}}</span>
         </div>
       </header>
       <div id="user-content" style="display: none">
@@ -98,66 +98,44 @@
             <th>Quantity</th>
             <th>Price</th>
           </tr>
-          <!-- <tr>
-            <td>Alfreds Futterkiste</td>
-            <td>Maria Anders</td>
-            <td>Germany</td>
-          </tr>
-          <tr>
-            <td>Berglunds snabbköp</td>
-            <td>Christina Berglund</td>
-            <td>Sweden</td>
-          </tr>
-          <tr>
-            <td>Centro comercial Moctezuma</td>
-            <td>Francisco Chang</td>
-            <td>Mexico</td>
-          </tr>
-          <tr>
-            <td>Ernst Handel</td>
-            <td>Roland Mendel</td>
-            <td>Austria</td>
-          </tr>
-          <tr>
-            <td>Island Trading</td>
-            <td>Helen Bennett</td>
-            <td>UK</td>
-          </tr>
-          <tr>
-            <td>Königlich Essen</td>
-            <td>Philip Cramer</td>
-            <td>Germany</td>
-          </tr>
-          <tr>
-            <td>Laughing Bacchus Winecellars</td>
-            <td>Yoshi Tannamuri</td>
-            <td>Canada</td>
-          </tr>
-          <tr>
-            <td>Magazzini Alimentari Riuniti</td>
-            <td>Giovanni Rovelli</td>
-            <td>Italy</td>
-          </tr>
-          <tr>
-            <td>North/South</td>
-            <td>Simon Crowther</td>
-            <td>UK</td>
-          </tr>
-          <tr>
-            <td>Paris spécialités</td>
-            <td>Marie Bertrand</td>
-            <td>France</td>
-          </tr> -->
         </table>
         <button class="btn add-item-btn">Add Item</button>
-        <div id="cart">
-          <div class="cart-content">
-            <!-- <span id="close-cart">&times;</span>
-            <div class="cart-items">
-            </div>
-            <div class="total-price-container">Total price: $<span id="total-price">0</span></div>
-            <div class="cart-buttons"> -->
-              <button class="btn" id="buy-button">Submit</button>
+        <div id="form-container">
+          <div class="form-content">
+            <span id="close-form">&times;</span>
+            <p class="form-name">Add Item</p>
+            <form id="add-item-form">
+              <div class="form-item">
+                <label for="category">Category: </label>
+                <input type="text" list="category-list" name="category" id="category" required>
+                <datalist id="category-list">
+                  <option>meat</option>
+                  <option>veggies</option>
+                  <option>bread</option>
+                  <option>fruit</option>
+                  <option>dairy</option>
+                </datalist>
+              </div>
+              <div class="form-item">
+                <label for="food-name">Product name: </label>
+                <input type="text" name="food-name" id="food-name" required>
+              </div>
+              <div class="form-item">
+                <label for="quantity">Quantity (grams): </label>
+                <input min="100" type="number" name="quantity" id="quantity" required>
+              </div>
+              <div class="form-item">
+                <label for="price">Price (dollars): </label>
+                <input min="0" type="number" name="price" id="price" step="any" required>
+              </div>
+              <div class="form-item">
+                <label for="expiration">Expiration date: </label>
+                <input type="date" name="expiration" id="expiration" required>
+              </div>
+              <div class=".submit-container">
+                <button type="submit" class="btn" id="submit-button">Submit</button>
+              </div>
+            </form>
             </div>
           </div>
         </div>
