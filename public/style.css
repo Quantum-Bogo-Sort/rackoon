@@ -90,10 +90,15 @@ body {
   right: 0px;
   bottom: 0px;;
   height: 100%;
+  pointer-events: none;
 }
 
 .raccoon img {
   height: 100%;
+}
+
+.raccoon-mobile {
+  pointer-events: none;
 }
 
 .raccoon-mobile img {
@@ -104,9 +109,9 @@ body {
   width: 100%;
 }
 
-.raccoon-mobile img {
+/* .raccoon-mobile img {
   width: 100%;
-}
+} */
 
 .float{
 	position:fixed;

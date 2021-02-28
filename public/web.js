@@ -38,11 +38,17 @@ function addFormListeners(store) {
     const categoryInput = document.querySelector('#category');
     const priceInput = document.querySelector('#price');
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        addFood(categoryInput.value, new Date(expirationInput.value), nameInput.value, Number(priceInput.value), Number(quantityInput.value), store);
+        await addFood(categoryInput.value, new Date(expirationInput.value), nameInput.value, Number(priceInput.value), Number(quantityInput.value), store);
         alert('Item added successfully!');
+        refreshListings(store);
     });
+}
+
+function refreshListings(store) {
+    document.querySelectorAll('table > tr').forEach(tr => tr.remove());
+    addListings(store);
 }
 
 function addCartButtonListeners() {
@@ -85,11 +91,21 @@ function addCartButtonListeners() {
 
 function onBuy() {
     if (cart.items.length) {
-        alert('Purchase successful');
         cart.buy();
+        alert('Purchase successful');
         emptyCart();
+
+        setTimeout(() => {
+            refreshProducts();
+        }, 1000);
     } else {
         alert('Cart is empty!');
+    }
+}
+
+function refreshProducts() {
+    if (document.querySelector('.active-btn').textContent.toLowerCase() === 'ingredients') {
+        addFoods();
     }
 }
 
@@ -164,20 +180,12 @@ async function addListings(store) {
         `;
         listings.appendChild(tr);
     });
-
-    // foods.
-//     <!-- <tr>
-//     <td>Alfreds Futterkiste</td>
-//     <td>Maria Anders</td>
-//     <td>Germany</td>
-//   </tr>
-
 }
 
 async function addFoods() {
-    clearShopItems();
-
     let foods = await getFoods();
+    
+    clearShopItems();
 
     let i = 0;
     foods.forEach((element) => {
@@ -197,7 +205,7 @@ function setActiveCategory(string) {
         else {
             recipesBtn.classList.remove('active-btn');
             ingredientsBtn.classList.add('active-btn');
-
+            clearShopItems();
             addFoods();
             return true;
         }
@@ -206,7 +214,7 @@ function setActiveCategory(string) {
         else {
             ingredientsBtn.classList.remove('active-btn');
             recipesBtn.classList.add('active-btn');
-
+            clearShopItems();
             addRecipes();
             return true;
         }
@@ -222,9 +230,9 @@ function clearShopItems() {
 
 async function addRecipes() {
     const shopItems = document.querySelector('.shop-items');
-    clearShopItems();
-
     const recipes = await filterRecipes();
+    
+    clearShopItems();
 
     let i = 0;
     for (recipe of recipes) {
@@ -386,7 +394,7 @@ function addFoodElement(foodData, id) {
     const provider = document.createElement('span');
     provider.textContent = `Provider: ${foodData.store}`;
     
-    input.onchange = updatePrice;
+    input.oninput = updatePrice;
 
     function updatePrice() {
         const prices = getPriceLocal(foodData, input.value);

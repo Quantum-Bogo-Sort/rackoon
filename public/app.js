@@ -97,7 +97,6 @@ document.addEventListener("DOMContentLoaded", event => {
     // getFoods();
 });
 
-
 async function addFoodSaved(name, ammount)
 {
     const db = firebase.firestore();
@@ -182,23 +181,23 @@ async function getPrice(id, amount)
     return price;
 }
 
-function addFood(category, expiration, name, price, weight, store)
+async function addFood(category, expiration, name, price, weight, store)
 {
-    const db = firebase.firestore();
-    db.collection("foods").add({
-        category: category,
-        expiration: expiration,
-        name: name,
-        price: price,
-        weight: weight,
-        store: store
-    })
-    .then((docRef) => {
+    try {
+        const db = firebase.firestore();
+        const docRef = await db.collection("foods").add({
+            category: category,
+            expiration: expiration,
+            name: name,
+            price: price,
+            weight: weight,
+            store: store
+        });
         console.log("Document written with ID: ", docRef.id);
-    })
-    .catch((error) => {
-        console.error("Error adding document: ", error);
-    });
+    }
+    catch (error) {
+        throw error;
+    }
 }
 
 function addRecipe(name, ingredients, rating = 0)
