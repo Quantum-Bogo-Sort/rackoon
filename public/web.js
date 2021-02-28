@@ -4,9 +4,12 @@ function addEventListeners() {
     loginButton.addEventListener('click', onLoginButtonClick);
 
     document.addEventListener("DOMContentLoaded", async (event) => {
-        const savings = await getGlobalFoodSaved()
         const savingsDiv = document.querySelector('#savings');
-        savingsDiv.textContent = Number.parseFloat(savings / 1000).toFixed(2);
+        setInterval(async () => {
+            const savings = await getGlobalFoodSaved()
+            console.log(savings);
+            savingsDiv.textContent = Number.parseFloat(savings / 1000).toFixed(2);
+        }, 1000);
     });
 }
 
