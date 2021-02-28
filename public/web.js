@@ -6,8 +6,7 @@ function addEventListeners() {
     document.addEventListener("DOMContentLoaded", async (event) => {
         const savingsDiv = document.querySelector('#savings');
         setInterval(async () => {
-            const savings = await getGlobalFoodSaved()
-            console.log(savings);
+            const savings = await getGlobalFoodSaved();
             savingsDiv.textContent = Number.parseFloat(savings / 1000).toFixed(2);
         }, 1000);
     });
@@ -125,7 +124,6 @@ function emptyCart() {
 
 async function onLoginButtonClick() {
     const authResult = await googleLogin();
-    console.log(authResult);
     onLoggedIn(authResult);
 }
 
