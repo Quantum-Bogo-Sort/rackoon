@@ -300,7 +300,6 @@ function addIngredients(offers) {
         input.id = offer.food.id;
         input.name = offer.food.data().name;
         input.value = offer.quantity;
-        input.checked = true;
 
         label.for = offer.food.id;
         label.textContent = `${offer.food.data().name} by ${offer.food.data().store} (${offer.quantity}g) - $${price}`;

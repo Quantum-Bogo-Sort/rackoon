@@ -1,9 +1,13 @@
 :root {
-  --main-bg-color: #dee0e0;
-  --main-text-color: #241612;
-  --main-color: #204A32;
-  --main-color-hover: #306145;
-  --secondary-color: #429767;
+  --main-bg-color: #dddddd;
+  --main-text-color: #2c2c2c;
+  /* --main-color: #204A32; */
+  --main-color: #785DC5;
+  /* --main-color-hover: #306145; */
+  --main-color-hover: #AA8CFF;
+  --main-color-light: #c4b9e7;
+  /* --secondary-color: #429767; */
+  --secondary-color: #F4CE2B;
 }
 
 body {
@@ -53,25 +57,55 @@ body {
 
 .container {
   /* position: absolute; */
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 20rem;
+  /* margin-left: auto;
+  margin-right: auto; */
+  padding-top: 15rem;
+  /* text-align: center; */
+  padding-left: 100px;
 }
 
 .container h1 {
   color: var(--main-text-color);
-  text-align: center;
+  /* text-align: center; */
   font-family: 'Anton', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  letter-spacing: 3px;
+  margin-bottom: 0;
 }
 
 .login {
   margin: auto;
-  margin-top: 1rem;
-  display: flex;
+  margin-top: 3rem;
+  /* display: flex; */
 }
 
 .login button {
   margin: auto;
+}
+
+.raccoon {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;;
+  height: 100%;
+}
+
+.raccoon img {
+  height: 100%;
+}
+
+.raccoon-mobile img {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  /* height: 100%; */
+  width: 100%;
+}
+
+.raccoon-mobile img {
+  width: 100%;
 }
 
 .float{
@@ -167,6 +201,8 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 90%;
+  max-height: 80%;
+  overflow: auto;
 }
 
 #listings td, #listings th {
@@ -255,10 +291,10 @@ body {
 
 .savings-info {
   font-size: 1.2rem;
-  padding: 1rem;
+  /* padding: 1rem; */
   text-align: center;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
 }
 
@@ -268,7 +304,7 @@ body {
   font-family: 'Poiret One', cursive;
   margin-right: 10px;
   text-decoration: underline;
-  text-decoration-color: var(--main-color);
+  text-decoration-color: var(--secondary-color);
 }
 
 .btn {
@@ -300,6 +336,7 @@ body {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  border: 3px solid var(--main-color);
 }
 
 * {
@@ -325,7 +362,7 @@ body {
 }
 
 .category-btn {
-  background-color: #B7C0B4;
+  background-color: var(--main-color-light);
   color: black;
   font-weight: bold;
   padding: 1rem;
@@ -397,6 +434,9 @@ body {
   height: 110px;
   text-align: left;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .item-name {
@@ -441,9 +481,40 @@ body {
   clear: both;
 }
 
+.not-desktop {
+  display: none;
+}
+
 @media screen and (max-width: 600px) {
   .food-item {
      width: 95%;
+  }
+
+  .container {
+    padding-left: 0px;
+    padding-top: 5rem;
+    text-align: center;
+  }
+
+  .container h1 {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .savings-info {
+    padding: 1rem;
+  }
+
+  #savings {
+    margin-right: 0px;
+  }
+
+  .not-mobile {
+    display: none;
+  }
+
+  .not-desktop {
+    display: inline;
   }
 
   .card-container {
